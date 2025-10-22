@@ -1,0 +1,357 @@
+// Mock inventory data for prototype (bypassing API)
+export const mockInventory = [
+  {
+    id: "INV-001",
+    name: "Acqua Bella Quartzite",
+    lot: "LOT-A1",
+    location: "Charleston",
+    type: "Quartzite",
+    category: "Natural Stone",
+    subcategory: "Premium Slab",
+    thicknessCm: 3,
+    finish: "Polished",
+    colorFamily: ["White", "Cream"],
+    origin: "Brazil",
+    availableSlabs: 12,
+    availableSqFt: 960,
+    avgLengthIn: 128,
+    avgWidthIn: 72,
+    priceTier: "Signature",
+    status: "In Stock",
+    images: [
+      "/images/products/Item_Img_41277_Acqua_Bella__8942.jpeg",
+      "/images/products/Item_Img_43818_BD0048888___BL016257___ACQUA_BELLA_3_cm_Polished.JPEG"
+    ],
+    notes: "High movement stone with dramatic veining.",
+    analytics: {
+      views: 1247,
+      searchAppearances: 892,
+      clicks: 634,
+      shares: 28
+    },
+    createdAt: "2025-02-10T15:32:00Z",
+    updatedAt: "2025-03-18T10:05:00Z"
+  },
+  {
+    id: "INV-002",
+    name: "African Blue Sodalite",
+    lot: "LOT-B7",
+    location: "Atlanta",
+    type: "Natural Stone",
+    category: "Natural Stone",
+    subcategory: "Classic Slab",
+    thicknessCm: 2,
+    finish: "Polished",
+    colorFamily: ["Blue", "White"],
+    origin: "Africa",
+    availableSlabs: 6,
+    availableSqFt: 410,
+    avgLengthIn: 120,
+    avgWidthIn: 68,
+    priceTier: "Heritage",
+    status: "Reserved",
+    images: ["/images/products/Item_Img_16465_African_Sodalite.jpg"],
+    notes: "Customer hold through April 30.",
+    analytics: {
+      views: 892,
+      searchAppearances: 567,
+      clicks: 412,
+      shares: 15
+    },
+    createdAt: "2025-01-22T09:12:00Z",
+    updatedAt: "2025-03-02T13:47:00Z"
+  },
+  {
+    id: "INV-003",
+    name: "African Cream Leather",
+    lot: "LOT-C3",
+    location: "Charlotte",
+    type: "Granite",
+    category: "Natural Stone",
+    subcategory: "Builder Slab",
+    thicknessCm: 3,
+    finish: "Leathered",
+    colorFamily: ["Cream", "Beige"],
+    origin: "Africa",
+    availableSlabs: 18,
+    availableSqFt: 1345,
+    avgLengthIn: 126,
+    avgWidthIn: 74,
+    priceTier: "Performance",
+    status: "In Stock",
+    images: [
+      "/images/products/Product_128_AFRICAN CREAM LEATHER.jpg",
+      "/images/products/Product_580_African Cream KP.jpg"
+    ],
+    notes: "Ideal for outdoor kitchens due to texture.",
+    analytics: {
+      views: 2134,
+      searchAppearances: 1456,
+      clicks: 1089,
+      shares: 42
+    },
+    createdAt: "2024-12-05T18:05:00Z",
+    updatedAt: "2025-02-14T08:24:00Z"
+  },
+  {
+    id: "INV-004",
+    name: "Alabama White Premium",
+    lot: "LOT-Q1",
+    location: "Raleigh",
+    type: "Marble",
+    category: "Natural Stone",
+    subcategory: "Designer Collection",
+    thicknessCm: 3,
+    finish: "Polished",
+    colorFamily: ["White", "Gray"],
+    origin: "USA",
+    availableSlabs: 24,
+    availableSqFt: 1780,
+    avgLengthIn: 129,
+    avgWidthIn: 79,
+    priceTier: "Signature",
+    status: "In Stock",
+    images: [
+      "/images/products/Item_Img_16477_alabama_white.jpg",
+      "/images/products/Item_Img_16478_alabama_white.jpg"
+    ],
+    notes: "Low-maintenance stone popular with designers.",
+    analytics: {
+      views: 3421,
+      searchAppearances: 2876,
+      clicks: 2103,
+      shares: 67
+    },
+    createdAt: "2025-03-01T11:11:00Z",
+    updatedAt: "2025-03-17T11:45:00Z"
+  },
+  {
+    id: "INV-005",
+    name: "Adamantium Quartzite",
+    lot: "LOT-N4",
+    location: "Charleston",
+    type: "Quartzite",
+    category: "Natural Stone",
+    subcategory: "Luxury Slab",
+    thicknessCm: 3,
+    finish: "Polished",
+    colorFamily: ["Black", "Gray"],
+    origin: "Brazil",
+    availableSlabs: 5,
+    availableSqFt: 360,
+    avgLengthIn: 118,
+    avgWidthIn: 70,
+    priceTier: "Signature",
+    status: "Low Stock",
+    images: ["/images/products/Item_Img_16462_Adamantium___Premium___3cm_BD00098498.jpg"],
+    notes: "Include in upcoming feature wall showcase.",
+    analytics: {
+      views: 567,
+      searchAppearances: 334,
+      clicks: 198,
+      shares: 8
+    },
+    createdAt: "2025-01-05T10:45:00Z",
+    updatedAt: "2025-03-19T16:22:00Z"
+  },
+  {
+    id: "INV-006",
+    name: "SKY WHITE DOLOMITE HONED FF 3CM",
+    type: "Quartzite",
+    finish: "Polished",
+    location: "Charleston",
+    lot: "LOT-7735",
+    status: "Low Stock",
+    priceTier: "Premium",
+    availableSlabs: 4,
+    availableSqFt: 340,
+    colorFamily: [],
+    images: ["/images/products/Item_Img_25385_SKY_WHITE_BL.8482_P.2.jpg"],
+    analytics: {
+      views: 1460,
+      searchAppearances: 1138,
+      clicks: 118,
+      shares: 0
+    }
+  },
+  {
+    id: "INV-007",
+    name: "LAZIZE DOLOMITE 3CM",
+    type: "Granite",
+    finish: "Honed",
+    location: "Charleston",
+    lot: "LOT-9899",
+    status: "In Stock",
+    priceTier: "Premium",
+    availableSlabs: 5,
+    availableSqFt: 365,
+    colorFamily: [],
+    images: ["/images/products/Item_Img_16275_LAZIZE_DOLOMITE_LOT__GRAM9437.JPG"],
+    analytics: {
+      views: 1224,
+      searchAppearances: 1417,
+      clicks: 255,
+      shares: 35
+    }
+  },
+  {
+    id: "INV-008",
+    name: "JUPARANA WHITE 2CM",
+    type: "Granite",
+    finish: "Honed",
+    location: "Charleston",
+    lot: "LOT-6534",
+    status: "Low Stock",
+    priceTier: "Value",
+    availableSlabs: 2,
+    availableSqFt: 248,
+    colorFamily: [],
+    images: ["/images/products/Product_637_Juparana White_992.JPG"],
+    analytics: {
+      views: 1988,
+      searchAppearances: 261,
+      clicks: 835,
+      shares: 21
+    }
+  },
+  {
+    id: "INV-009",
+    name: "NORDIC CRYSTAL QUARTZITE 3CM",
+    type: "Granite",
+    finish: "Leathered",
+    location: "Charlotte",
+    lot: "LOT-3446",
+    status: "In Stock",
+    priceTier: "Value",
+    availableSlabs: 19,
+    availableSqFt: 54,
+    colorFamily: [],
+    images: ["/images/products/Item_Img_37695_bd_49768_blk_01006232_nordic_crystal.jpg"],
+    analytics: {
+      views: 2024,
+      searchAppearances: 1462,
+      clicks: 753,
+      shares: 7
+    }
+  },
+  {
+    id: "INV-010",
+    name: "PANGAEA BLUE 3CM",
+    type: "Quartzite",
+    finish: "Leathered",
+    location: "Charlotte",
+    lot: "LOT-8379",
+    status: "Low Stock",
+    priceTier: "Value",
+    availableSlabs: 1,
+    availableSqFt: 217,
+    colorFamily: [],
+    images: ["/images/products/Item_Img_44481_Pangaea_Blue___Reference__1_.jpg"],
+    analytics: {
+      views: 314,
+      searchAppearances: 593,
+      clicks: 149,
+      shares: 1
+    }
+  },
+  {
+    id: "INV-011",
+    name: "PATAGONIA SPIRIT 3CM",
+    type: "Quartzite",
+    finish: "Honed",
+    location: "Raleigh",
+    lot: "LOT-8056",
+    status: "Low Stock",
+    priceTier: "Standard",
+    availableSlabs: 2,
+    availableSqFt: 209,
+    colorFamily: [],
+    images: ["/images/products/Item_Img_38675_patagonia__376690.jpg"],
+    analytics: {
+      views: 1639,
+      searchAppearances: 557,
+      clicks: 629,
+      shares: 31
+    }
+  },
+  {
+    id: "INV-012",
+    name: "SAGE BRUSH 3CM",
+    type: "Marble",
+    finish: "Honed",
+    location: "Charleston",
+    lot: "LOT-6007",
+    status: "Reserved",
+    priceTier: "Value",
+    availableSlabs: 10,
+    availableSqFt: 450,
+    colorFamily: [],
+    images: ["/images/products/Product_422_sage brush (1).JPG"],
+    analytics: {
+      views: 1309,
+      searchAppearances: 373,
+      clicks: 114,
+      shares: 33
+    }
+  },
+  {
+    id: "INV-013",
+    name: "PALOMA QUARTZ 3CM",
+    type: "Granite",
+    finish: "Honed",
+    location: "Hardeeville",
+    lot: "LOT-5770",
+    status: "Low Stock",
+    priceTier: "Value",
+    availableSlabs: 10,
+    availableSqFt: 157,
+    colorFamily: [],
+    images: ["/images/products/Item_Img_30956__9124.jpeg"],
+    analytics: {
+      views: 1174,
+      searchAppearances: 624,
+      clicks: 583,
+      shares: 49
+    }
+  },
+  {
+    id: "INV-014",
+    name: "SEMIPRECIOUS QUARTZ CRYSTAL GIANT W/ GOLD DUAL POLISH 2CM",
+    type: "Marble",
+    finish: "Polished",
+    location: "Charlotte",
+    lot: "LOT-4068",
+    status: "Low Stock",
+    priceTier: "Standard",
+    availableSlabs: 17,
+    availableSqFt: 51,
+    colorFamily: [],
+    images: ["/images/products/Item_Img_46296_quartz_white_crystal_giant_w._gold.JPG"],
+    analytics: {
+      views: 1551,
+      searchAppearances: 165,
+      clicks: 277,
+      shares: 39
+    }
+  },
+  {
+    id: "INV-015",
+    name: "JUPARANA PERSIA 3CM",
+    type: "Granite",
+    finish: "Honed",
+    location: "Hardeeville",
+    lot: "LOT-5824",
+    status: "Low Stock",
+    priceTier: "Standard",
+    availableSlabs: 2,
+    availableSqFt: 331,
+    colorFamily: [],
+    images: ["/images/products/Product_357_JUPARANA PERSIA 8209 006.jpg"],
+    analytics: {
+      views: 508,
+      searchAppearances: 1221,
+      clicks: 40,
+      shares: 16
+    }
+  }
+];

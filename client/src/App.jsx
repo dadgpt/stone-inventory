@@ -14,9 +14,11 @@ import {
   createInventoryItem,
   reloadInventory,
 } from './services/api.js';
+import { mockInventory } from './mockData.js';
 import './App.css';
 
-// Testing Vercel deployment trigger
+// MOCK MODE: Set to true to use hardcoded data instead of API (for prototype deployment)
+const USE_MOCK_DATA = true;
 
 const DEFAULT_FILTERS = {
   search: '',
@@ -31,6 +33,48 @@ const PAGE_SIZE = 15;
 
 function dedupe(values = []) {
   return Array.from(new Set(values.filter(Boolean))).sort();
+}
+
+// Helper functions for mock data filtering and pagination
+function filterInventory(items, query) {
+  return items.filter((item) => {
+    if (query.search) {
+      const term = query.search.toLowerCase();
+      const candidate = [item.name, item.lot, item.location, item.type, item.category]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      if (!candidate.includes(term)) return false;
+    }
+    if (query.location && item.location?.toLowerCase() !== query.location.toLowerCase()) return false;
+    if (query.type && item.type?.toLowerCase() !== query.type.toLowerCase()) return false;
+    if (query.status && item.status?.toLowerCase() !== query.status.toLowerCase()) return false;
+    if (query.tier && item.priceTier?.toLowerCase() !== query.tier.toLowerCase()) return false;
+
+    if (query.color) {
+      const colors = item.colorFamily || [];
+      const match = colors.some((c) => c.toLowerCase() === query.color.toLowerCase());
+      if (!match) return false;
+    }
+
+    return true;
+  });
+}
+
+function paginate(items, page = 1, pageSize = 20) {
+  const currentPage = Math.max(1, Number(page));
+  const perPage = Math.max(1, Math.min(100, Number(pageSize)));
+  const start = (currentPage - 1) * perPage;
+  const pagedItems = items.slice(start, start + perPage);
+  return {
+    meta: {
+      total: items.length,
+      page: currentPage,
+      pageSize: perPage,
+      totalPages: Math.ceil(items.length / perPage) || 1,
+    },
+    data: pagedItems,
+  };
 }
 
 export default function App() {
@@ -63,12 +107,27 @@ export default function App() {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetchInventory({ ...filters, page, pageSize: PAGE_SIZE });
-        if (!isCancelled) {
-          setInventory(response.data);
-          setMeta(response.meta);
-          if (!response.data.some((item) => item.id === selectedId)) {
-            setSelectedId(response.data[0]?.id || null);
+        if (USE_MOCK_DATA) {
+          // Use mock data instead of API
+          await new Promise(resolve => setTimeout(resolve, 200)); // Simulate network delay
+          const filtered = filterInventory(mockInventory, filters);
+          const paged = paginate(filtered, page, PAGE_SIZE);
+          if (!isCancelled) {
+            setInventory(paged.data);
+            setMeta(paged.meta);
+            if (!paged.data.some((item) => item.id === selectedId)) {
+              setSelectedId(paged.data[0]?.id || null);
+            }
+          }
+        } else {
+          // Use API
+          const response = await fetchInventory({ ...filters, page, pageSize: PAGE_SIZE });
+          if (!isCancelled) {
+            setInventory(response.data);
+            setMeta(response.meta);
+            if (!response.data.some((item) => item.id === selectedId)) {
+              setSelectedId(response.data[0]?.id || null);
+            }
           }
         }
       } catch (err) {
@@ -84,7 +143,7 @@ export default function App() {
     return () => {
       isCancelled = true;
     };
-  }, [filters, page, refreshKey]);
+  }, [filters, page, refreshKey, selectedId]);
 
   useEffect(() => {
     let isCancelled = false;
@@ -95,9 +154,19 @@ export default function App() {
       }
       setDetailLoading(true);
       try {
-        const item = await fetchInventoryItem(selectedId);
-        if (!isCancelled) {
-          setSelectedItem(item);
+        if (USE_MOCK_DATA) {
+          // Use mock data
+          await new Promise(resolve => setTimeout(resolve, 100)); // Simulate network delay
+          const item = mockInventory.find((entry) => entry.id === selectedId);
+          if (!isCancelled) {
+            setSelectedItem(item || null);
+          }
+        } else {
+          // Use API
+          const item = await fetchInventoryItem(selectedId);
+          if (!isCancelled) {
+            setSelectedItem(item);
+          }
         }
       } catch (err) {
         if (!isCancelled) {
@@ -173,8 +242,16 @@ export default function App() {
     setSelectedId(id);
     setModalOpen(true);
     try {
-      const item = await fetchInventoryItem(id);
-      setModalItem(item);
+      if (USE_MOCK_DATA) {
+        // Use mock data
+        await new Promise(resolve => setTimeout(resolve, 100)); // Simulate network delay
+        const item = mockInventory.find((entry) => entry.id === id);
+        setModalItem(item || null);
+      } else {
+        // Use API
+        const item = await fetchInventoryItem(id);
+        setModalItem(item);
+      }
     } catch (err) {
       setError(err.message);
     }
