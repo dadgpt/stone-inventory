@@ -1,0 +1,430 @@
+
+<div *ngFor="#WCS of WCSettings; #i=index">
+<div class='col-md-9 col-xs-12 clearfix' *ngIf="ItemGallery && WCS.SearchType != 'Top'">
+<div *ngIf="WCS.GalleryListType === 'ListProducts'" id='GalleryDivID'>
+	<div>			
+		<div id='searchFilters'></div>
+		<div id='ItemGallery'>
+            <div class="row">
+			<div class="col-xs-12 TopPageNav">
+				<div class="PerPage" id='perPageLHS'>
+					<!--<select (change)="onChange($event.target.value)" style="max-width:150px" id="ItemsPerPageID">
+						<option value='{{pageNum}}' id='{{pageNum}}'  *ngFor="#pageNum of paging">Show  Items</option>
+					</select>	--> 
+					Show <span class='hand clicked' id='span36' (click)="onChange(36)">36</span> <span id='span60' class='hand' (click)="onChange(60)">60</span> <span id='span120' class='hand' (click)="onChange(120)">120</span> of <span id='ProductCount' class='matchCount'></span> <span class=''>Matches</span>
+				</div>
+				<ul class='SPSPagination' id='pagingTop'>
+					<li class='Prev'><a (click)="prevPage()"><span class="sps-chevron-left"></span></a></li>
+					<li class='disabled'><a><span class='CurrentPage' id='CurrentPage'>1</span> of <span id='LastPage'>32</span></a></li>
+					<li class='Next'><a (click)="nextPage()"><span class="sps-chevron-right"></span></a></li>
+				</ul>					
+			</div>           
+			<div align="center" id='NoneFoundID'>
+				<div Class='NoneFound'>
+					<div class="alert"><span class='icon-shocked'></span>&nbsp;<span>Sorry, no products matched.</span></div>
+					<div class='text'>Check your spelling or Try again using different search options</div>
+				</div>
+			</div>
+			<div id='ImagesSection'>
+				<!--Item Loop starts Here-->
+				<div *ngFor="#Item of ItemGallery; #i=index">
+					<div class='col-xs-12 col-sm-6 col-md-4'>
+						<div class='ImgWrap'>
+							<div class='FlagLayer' *ngIf="Item.NewArrival === 'on' && WCS.NewProductIcon ==='on'">
+								<div class='ThumbnailFlag NewColor'></div>
+							</div>
+							<div id='itemName' hidden>{{Item.ItemName}}</div>
+							<div id='itemID' hidden>{{Item.ItemID}}</div>
+							<div class='IconLayer'>
+								<a *ngIf="Item.Filename !=''" href="{{WCS.SecureFilePath}}{{Item.Filename}}?width=1500" class='Gallery' title='View Large' attr.data-sub-html="<div class='CenterCaption'><ul class='LBInfo'><li>{{Item.ItemName}}</li><li>{{Item.ProductFormValue}}</li><li>{{Item.CategoryName}}</li><li>{{WCS.ShowProductRangeinGallery == 'on' ? Item.PriceRange : ''}}</li></ul><div class='LBForm'><button class='lg-close lg-icon' onClick=gotoDetail()>View Inventory</button></div></div><script>function gotoDetail(){location.href='{{Item.ItemName}}'.split(/[^a-zA-Z0-9]/g).join('-') +'/{{Item.ItemID}}/Location/'+ document.getElementById('SelectedLocation').innerHTML;}</script>">									
+										<div class='IconBG' *ngIf="Item.Filename !=''">
+											<div class='icon-enlarge2' (click)="showGallery()"></div>
+										</div>
+									</a>
+								<div class='IconBG' id="detail_{{i}}" (click)="gotoDetail(Item)">
+									<div class='icon-list2'></div>
+								</div>
+							</div>
+							<div class="FeaturedItem" title="Featured" *ngIf="Item.FeatureProduct === 'on'">
+							<div class="IconBG">
+							<span class="icon-star-full"></span>
+							</div>
+							</div>
+							<div (click)="gotoDetail(Item)">
+								<img *ngIf="Item.Filename !=''" class="lazy" attr.data-original='{{WCS.SecureFilePath}}{{Item.Filename}}?width=500' width='100%'/>
+								<div *ngIf="Item.Filename == ''" class="NoImg"><div class="NoImgText"></div></div>
+							</div>
+						</div>
+						<div class='ItemLabel sphand' (click)="gotoDetail(Item)">
+							<p class='ItemName'>{{Item.ItemName | uppercase}}</p>
+							<p *ngIf="Item.CategoryName !== null && Item.CategoryName !== Null && Item.CategoryName !== '' && WCS.ShowProductCategoryinGallery == 'on'" class='ItemInfo'>{{Item.CategoryName | uppercase}}</p>
+							<p  *ngIf="Item.SubCategory !== null && Item.SubCategory !== Null && Item.SubCategory !== '' && WCS.ShowProductSubCategoryinGallery == 'on'" class='ItemInfo'>{{Item.SubCategory | uppercase}}</p>
+							<p *ngIf="Item.type !== null && Item.type !== Null && Item.type !== '' && WCS.ShowProductTypeinGallery == 'on'" class='ItemInfo'>{{Item.type | uppercase}}</p>
+							<p *ngIf="Item.PriceRange !== null && Item.PriceRange !== Null && Item.PriceRange !== '' && WCS.ShowProductRangeinGallery == 'on'" class='ItemInfo'>{{Item.PriceRange | uppercase}}</p>
+							
+						</div>
+					</div>
+					<div *ngIf="(i+1) % 3 == 0 " class='clearfix visible-lg-block visible-md-block'></div>
+					<div *ngIf="(i+1) % 2 == 0" class='clearfix visible-sm-block hidden-md hidden-lg'></div>
+				</div>
+				<!--End Item-->
+			</div>
+		</div>			
+	</div>
+    {{lightGallery()}}	
+   </div>
+	<div class="row">
+		<div>
+			<div class="col-xs-12 BottomPageNav">
+				<ul class="SPSPagination" id='pagingBottom'>
+					<li class="First"><a (click)="firstPage()"><span class="sps-chevron-left"></span><span class="sps-chevron-left"></span><!--first page--></a></li>
+					<li class="Prev"><a (click)="prevPage()"><span class="sps-chevron-left"></span><!--Prev page--></a></li>
+					<li *ngIf="CurrentPage-2 >= 1" (click)="exactPage(CurrentPage-2)"><a >{{CurrentPage-2}}</a></li>
+					<li *ngIf="CurrentPage-1 >= 1" (click)="exactPage(CurrentPage-1)"><a >{{CurrentPage-1}}</a></li>
+					<li class="active"><a >{{CurrentPage}}</a></li>
+					<li *ngIf="CurrentPage+1 <= LastPage" (click)="exactPage(CurrentPage+1)"><a >{{CurrentPage+1}}</a></li>
+					<li *ngIf="CurrentPage+2 <= LastPage" (click)="exactPage(CurrentPage+2)"><a >{{CurrentPage+2}}</a></li>
+					<li *ngIf="CurrentPage+3 <= LastPage && CurrentPage-2 < 1" (click)="exactPage(CurrentPage+3)"><a >{{CurrentPage+3}}</a></li>
+					<li *ngIf="CurrentPage+4 <= LastPage && CurrentPage-1 < 1" (click)="exactPage(CurrentPage+4)"><a >{{CurrentPage+4}}</a></li>
+
+					<li class="Next"><a (click)="nextPage()"><span class="sps-chevron-right"></span><!--Next page--></a></li>
+					<li class="Last"><a (click)="lastPage()"><span class="sps-chevron-right"></span><span class="sps-chevron-right"></span><!--last page--></a></li>
+				</ul>
+			</div>
+		</div>
+	</div> 	
+</div>
+<div *ngIf="WCS.GalleryListType === 'ListInventoryLots'" id='GalleryDivID'>
+	<div class='row'>						
+		<div id='ItemGallery'>
+			<div class="col-xs-12 TopPageNav">
+				<div class="PerPage" id='perPageLHS'>
+					Show <span class='hand clicked' id='span36' style='font-size:10pt;' (click)="onChange(36)">36</span> <span id='span60' class='hand' style='font-size:12pt;' (click)="onChange(60)">60</span> <span id='span120' class='hand' style='font-size:14pt;' (click)="onChange(120)">120</span> of <span id='ProductCount' class='matchCount'></span> <span class=''>Matches</span>
+				</div>
+				<ul class='SPSPagination' id='pagingTop'>
+					<li class='Prev'><a (click)="prevPage()"><span class="sps-chevron-left"></span></a></li>
+					<li class='disabled'><a><span class='CurrentPage' id='CurrentPage'>1</span> f <span id='LastPage' style='color:#555'>32</span></a></li>
+					<li class='Next'><a (click)="nextPage()"><span class="sps-chevron-right"></span></a></li>
+				</ul>	
+			</div>
+			<div align="center" id='NoneFoundID'>
+				<div Class='NoneFound'>
+					<div class="alert"><span class='icon-shocked'></span>&nbsp;<span>Sorry, no products matched.</span></div>
+					<div class='text'>Check your spelling or Try again using different search options</div>
+				</div>
+			</div>
+			<div id='ImagesSection'>
+			<!--Item Loop starts Here-->				
+				<div *ngFor="#Item of ItemGallery; #i=index">
+					<div class='col-xs-12 col-sm-6 col-md-4'>
+						<div class='ImgWrap'>
+							<div class='FlagLayer' *ngIf="Item.NewArrival === 'on' && WCS.NewProductIcon ==='on'">
+								<div class='ThumbnailFlag NewColor'></div>
+							</div>							
+							<div>
+								<div id='EmailSingleImage_{{i}}' (click)="EmailSingleImage(Item, i, WCS.FileServer, WCS.VirtualDirectoryName, WCS.IDOneLable, WCS.IDTwoLable, WCS.IDThreeLable, WCS.SerialPrefixLable)" hidden></div>
+								<div id='hideMailIcon' (click)="hideMailIcon()" hidden></div>
+								<div id='popup_{{i}}' hidden>
+									<ul class='LBInfo'>
+										<li>{{Item.ItemName | uppercase}}</li>
+										<li *ngIf="Item.IDOne !== Null && Item.IDOne !== ''"><span>{{WCS.IDOneLable}}: </span>{{Item.IDOne}}</li>
+										<li *ngIf="Item.IDTwo !== Null && Item.IDTwo !== ''"><span>{{WCS.IDTwoLable}}: </span>{{Item.IDTwo}}</li>
+										<li *ngIf="Item.IDThree !== Null && Item.IDThree !== ''"><span>{{WCS.IDThreeLable}}: </span>{{Item.IDThree}}</li>
+										<li *ngIf="Item.SerialPrefix !== Null && Item.SerialPrefix !== ''"><span>{{WCS.SerialPrefixLable}}: </span>{{Item.SerialPrefix}}</li>
+										<li *ngIf="Item.AverageLength !== 0 && Item.AverageWidth !== 0 && WCS.ShowAvgSizeinGallery === 'on'"><span>Avg Size: </span>{{Item.AverageLength}}" X {{Item.AverageWidth}}"</li>
+										<li *ngIf="Item.AvailableSlabs > 1 && WCS.ShowQuantityinGallery === 'on'"><span>Qty:</span><span *ngIf="Item.AvailableQty !== 0" style="font-weight: normal">{{Item.AvailableQty}} {{Item.UOM | uppercase}} / </span>{{Item.AvailableSlabs}} {{Item.ProductFormValue | uppercase}}s</li>
+										<li *ngIf="Item.AvailableSlabs == 1 && WCS.ShowQuantityinGallery === 'on'"><span>Qty:</span><span *ngIf="Item.AvailableQty !== 0" style="font-weight: normal">{{Item.AvailableQty}} {{Item.UOM | uppercase}} / </span>{{Item.AvailableSlabs}} {{Item.ProductFormValue | uppercase}}</li>
+										<li *ngIf="Item.Location !== Null && Item.Location !== '' && WCS.ShowLocationinGallery === 'on' "><span>Location: </span>{{Item.Location}}</li>
+										<li *ngIf="Item.ProductGroup !== Null && Item.ProductGroup !== '' && WCS.ShowProductGroupinGallery === 'on' "><span>Group: </span>{{Item.ProductGroup}}</li>
+									</ul>
+								</div>
+								<a *ngIf="Item.Filename !=''" href="{{WCS.SecureFilePath}}{{Item.Filename}}" class='Gallery' title='View Large' attr.data-sub-html="<div class='CenterCaption'><div id='iteminfo_{{i}}'></div><div class='LBForm'><div><input placeholder='Recipient-1' type='email' id ='email1_{{i}}'></div><div><input id ='email2_{{i}}' placeholder='Recipient-2' onfocus='ValidateFirstEmail({{i}})' type='email'></div><div><button onclick=EmailSingleImage()>Send Email</button></div></div></div></div><div id='SendingMail1' class='CenterCaption'></div><script>document.getElementById('iteminfo_{{i}}').innerHTML = document.getElementById('popup_{{i}}').innerHTML; 												
+								function ValidateFirstEmail(p){
+									if(document.getElementById('email1_'+ p).value){
+									var x = document.getElementById('email1_'+ p).value;
+									var atpos = x.indexOf('@');
+									var dotpos = x.lastIndexOf('.');
+										if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+											alert('Not a valid e-mail address');
+											document.getElementById('email1_'+ p).focus();
+										}
+									}
+									else{
+											alert('Enter Recipient-1 Email ID');
+											document.getElementById('email1_'+ p).focus();
+									}
+								}
+								function EmailSingleImage(){
+									document.getElementById('EmailSingleImage_{{i}}').click(); 
+								}
+								</script>" >
+								<div class='IconBG IconLayer' *ngIf="Item.Filename !=''">
+									
+									<div class='icon-email' (click)="showGallery()"></div>
+								</div>
+								<div>
+									<img *ngIf="Item.Filename !=''" class="lazy" attr.data-original='{{WCS.SecureFilePath}}{{Item.Filename}}?width=500' alt='{{Item.ItemName}}' (click)="showGallery()"/>						
+								</div>
+								</a>
+
+								<div *ngIf="Item.Filename == ''"  class="NoImg"><div class="NoImgText"></div></div>
+							</div>
+						</div>
+						<div class='InvItem ItemLabel'>
+							<p class='ItemInfo'>{{Item.ItemName | uppercase}}</p>
+							<p class='ItemInfo' *ngIf="Item.IDOne !== Null && Item.IDOne !== ''"><span>{{WCS.IDOneLable}}:</span>{{Item.IDOne | uppercase}}</p>
+							<p class='ItemInfo' *ngIf="Item.IDTwo !== Null && Item.IDTwo !== ''"><span>{{WCS.IDTwoLable}}:</span>{{Item.IDTwo | uppercase}}</p>
+							<p class='ItemInfo' *ngIf="Item.IDThree !== Null && Item.IDThree !== ''"><span>{{WCS.IDThreeLable}}:</span>{{Item.IDThree | uppercase}}</p>
+							<p class='ItemInfo' *ngIf="Item.SerialPrefix !== Null && Item.SerialPrefix !== ''"><span>{{WCS.SerialPrefixLable}}:</span>{{Item.SerialPrefix}}</p>
+							<p class='ItemInfo' *ngIf="Item.AverageLength !== 0 && Item.AverageWidth !== 0 && WCS.ShowAvgSizeinGallery === 'on'"><span>Avg Size:</span>{{Item.AverageLength}}" X {{Item.AverageWidth}}"</p>
+							<p class='ItemInfo' *ngIf="Item.AvailableSlabs > 1 && WCS.ShowQuantityinGallery === 'on'"><span>Qty:</span><span *ngIf="Item.AvailableQty !== 0" style="font-weight: normal">{{Item.AvailableQty}} {{Item.UOM | uppercase}} / </span>{{Item.AvailableSlabs}} {{Item.ProductFormValue | uppercase}}S</p><!--For non slab Alternate Unit of measure should been shown if availible-->
+							<p class='ItemInfo' *ngIf="Item.AvailableSlabs == 1 && WCS.ShowQuantityinGallery === 'on'"><span>Qty:</span><span *ngIf="Item.AvailableQty !== 0" style="font-weight: normal">{{Item.AvailableQty}} {{Item.UOM | uppercase}} / </span>{{Item.AvailableSlabs}} {{Item.ProductFormValue | uppercase}}</p><!--For non slab Alternate Unit of measure should been shown if availible-->
+							<p class='ItemInfo' *ngIf="Item.Location !== '' && WCS.ShowLocationinGallery === 'on'"><span>Location:</span> {{ Item.Location }}</p>
+							<p class='ItemInfo' *ngIf="Item.ProductGroup !== '' && WCS.ShowProductGroupinGallery === 'on'"><span>Group:</span> {{ Item.ProductGroup }}</p>
+							<p class='ItemInfo' *ngIf="Item.IDOne !== '' && WCS.SearchByPriceRange !== null"><span>Price Range:</span>{{ Item.PriceRange }}</p>
+
+							<button (click)="RemoveFromCollection(Item)" *ngIf="Item.WebCartID*1 != 0" class="Remove"><span class='icon-plusthin'></span>&nbsp;Collection</button>
+							<button (click)="AddToCollection(Item)" *ngIf="Item.WebCartID*1 === 0" ><span class='icon-plusthin'></span>&nbsp;Collection</button>
+						</div>					
+					</div>
+
+					<div *ngIf="(i+1) % 3 == 0 " class='clearfix visible-lg-block visible-md-block'></div>
+					<div *ngIf="(i+1) % 2 == 0" class='clearfix visible-sm-block hidden-md hidden-lg'></div>
+				</div>
+			</div>
+			<!--End Item-->		
+		</div>
+		{{lightGallery()}}
+	</div>
+	<div class="row">
+		<div class="col-xs-12 BottomPageNav">
+			<ul class="SPSPagination" id='pagingBottom'>
+				<li class="First"><a (click)="firstPage()"><span class="sps-chevron-left"></span><span class="sps-chevron-left"></span><!--first page--></a></li>
+				<li class="Prev"><a (click)="prevPage()"><span class="sps-chevron-left"></span><!--Prev--></a></li>
+				<li *ngIf="CurrentPage-2 >= 1" (click)="exactPage(CurrentPage-2)"><a style="">{{CurrentPage-2}}</a></li>
+				<li *ngIf="CurrentPage-1 >= 1" (click)="exactPage(CurrentPage-1)"><a >{{CurrentPage-1}}</a></li>
+				<li class="active"><a >{{CurrentPage}}</a></li>
+				<li *ngIf="CurrentPage+1 <= LastPage" (click)="exactPage(CurrentPage+1)"><a >{{CurrentPage+1}}</a></li>
+				<li *ngIf="CurrentPage+2 <= LastPage" (click)="exactPage(CurrentPage+2)"><a >{{CurrentPage+2}}</a></li>
+				<li *ngIf="CurrentPage+3 <= LastPage && CurrentPage-2 < 1" (click)="exactPage(CurrentPage+3)"><a >{{CurrentPage+3}}</a></li>
+				<li *ngIf="CurrentPage+4 <= LastPage && CurrentPage-1 < 1" (click)="exactPage(CurrentPage+4)"><a >{{CurrentPage+4}}</a></li>
+
+				<li class="Next"><a (click)="nextPage()"><span class="sps-chevron-right"></span><span class="sps-chevron-right"></span><!--next--></a></li>
+				<li class="Last"><a (click)="lastPage()"><span class="sps-chevron-right"></span><!--last page--></a></li>
+			</ul>
+		</div>
+	</div> 
+</div>
+</div>
+<div class='col-md-12 clearfix' *ngIf="ItemGallery && WCS.SearchType === 'Top'">
+	<div *ngIf="WCS.GalleryListType === 'ListProducts'" id='GalleryDivID'>
+		<div class='row'>						
+			<div id='ItemGallery'>
+				<div class="col-xs-12 TopPageNav">
+					<div class="PerPage" id='perPageLHS'>
+						<!--<select (change)="onChange($event.target.value)" style="max-width:150px" id="ItemsPerPageID">
+							<option value='{{pageNum}}' id='{{pageNum}}' *ngFor="#pageNum of paging">Show {{pageNum}} Items</option>
+						</select> of  <span id='ProductCount' style='color:#555'></span>-->
+						Show <span class='hand clicked' id='span36' (click)="onChange(36)">36</span> <span id='span60' class='hand' (click)="onChange(60)">60</span> <span id='span120' class='hand' (click)="onChange(120)">120</span> of <span id='ProductCount' class='matchCount'></span> <span class=''>Matches</span>
+					</div>
+					<ul class='SPSPagination' id='pagingTop'>
+						<li class='Prev'><a (click)="prevPage()"><span class="sps-chevron-left"></span></a></li>
+						<li class='disabled'><a><span class='CurrentPage' id='CurrentPage'>1</span> of <span id='LastPage' style='color:#555'>32</span></a></li>
+						<li class='Next'><a (click)="nextPage()"><span class="sps-chevron-right"></span></a></li>
+					</ul>								
+				</div>
+				<div align="center" id='NoneFoundID'>
+				<div Class='NoneFound'>
+					<div class="alert"><span class='icon-shocked'></span>&nbsp;<span>Sorry, no products matched.</span></div>
+					<div class='text'>Check your spelling or Try again using different search options</div>
+				</div>
+			</div>
+				<div id='ImagesSection'>	
+					<!--Item Loop starts Here-->	
+					<div *ngFor="#Item of ItemGallery; #i=index">	
+					<div class='col-xs-12 col-sm-6 col-md-3'>
+						<div class='ImgWrap'>
+							<div class='FlagLayer' *ngIf="Item.NewArrival === 'on' && WCS.NewProductIcon ==='on'">
+								<div class='ThumbnailFlag NewColor'></div>
+							</div>
+							<div id='itemName' hidden>{{Item.ItemName}}</div>
+							<div id='itemID' hidden>{{Item.ItemID}}</div>
+							
+							<div class='IconLayer'>
+								<a *ngIf="Item.Filename !=''" href="{{WCS.SecureFilePath}}{{Item.Filename}}" class='Gallery' title='View Large' attr.data-sub-html="<div class='CenterCaption'><ul class='LBInfo'><li>{{Item.ItemName}}</li><li>{{Item.ProductFormValue}}</li><li>{{Item.CategoryName}}</li><li>{{WCS.ShowProductRangeinGallery == 'on' ? Item.PriceRange : ''}}</li></ul><div class='LBForm'><button class='lg-close lg-icon' onClick=gotoDetail()>View Inventory</button></div></div><script>function gotoDetail(){location.href='{{Item.ItemName}}'.split(/[^a-zA-Z0-9]/g).join('-') +'/{{Item.ItemID}}/Location/'+ document.getElementById('SelectedLocation').innerHTML;}</script>">
+										<div class='IconBG' *ngIf="Item.Filename !=''">
+											<div class='icon-enlarge2' (click)="showGallery()"></div>
+										</div>
+									</a>
+								<div class='IconBG' id="detail_{{i}}" (click)="gotoDetail(Item)">
+									<div class='icon-list2'></div>
+								</div>
+							</div>
+							<div class="FeaturedItem" title="Featured" *ngIf="Item.FeatureProduct === 'on'">
+							<div class="IconBG">
+							<span class="icon-star-full"></span>
+							</div>
+							</div>
+							<div>
+								<img *ngIf="Item.Filename !=''" class='lazy' attr.data-original='{{WCS.SecureFilePath}}{{Item.Filename}}?width=500' alt='{{Item.ItemName}}' (click)="gotoDetail(Item)"/>
+								<div *ngIf="Item.Filename == ''"  class="NoImg" (click)="gotoDetail(Item)"><div class="NoImgText"></div></div>
+							</div>
+						</div>
+						<div class='ItemLabel sphand' (click)="gotoDetail(Item)">
+							<p class='ItemName'>{{Item.ItemName | uppercase}}</p>
+							<p *ngIf="Item.CategoryName !== null && Item.CategoryName !== Null && Item.CategoryName !== '' && WCS.ShowProductCategoryinGallery == 'on'" class='ItemInfo'>{{Item.CategoryName | uppercase}}</p>
+							<p *ngIf="Item.SubCategory !== null && Item.SubCategory !== Null && Item.SubCategory !== '' && WCS.ShowProductSubCategoryinGallery == 'on'" class='ItemInfo'>{{Item.SubCategory | uppercase}}</p>
+							<p *ngIf="Item.type !== null && Item.type !== Null && Item.type !== '' && WCS.ShowProductTypeinGallery == 'on'" class='ItemInfo'>{{Item.type | uppercase}}</p>
+							<p *ngIf="Item.PriceRange !== null && Item.PriceRange !== Null && Item.PriceRange !== '' && WCS.ShowProductRangeinGallery == 'on'" class='ItemInfo'>{{Item.PriceRange | uppercase}}</p>
+						</div>
+					</div>
+					<div *ngIf="(i+1) % 4 == 0 " class='clearfix visible-lg-block visible-md-block'></div>
+					<div *ngIf="(i+1) % 2 == 0" class='clearfix visible-sm-block hidden-md hidden-lg'></div>
+					</div>
+					<!--End Item-->	
+				</div>	
+				<div>{{lightGallery()}}</div>
+			</div>	
+			<div class="row">
+				<div class="col-xs-12 BottomPageNav">
+					<ul class="SPSPagination" id='pagingBottom'>
+						<li class="First"><a (click)="firstPage()"><span class="sps-chevron-left"></span><span class="sps-chevron-left"></span><!--first page--></a></li>
+						<li class="Prev"><a (click)="prevPage()"><span class="sps-chevron-left"></span><!--Prev page--></a></li>
+						<li *ngIf="CurrentPage-2 >= 1" (click)="exactPage(CurrentPage-2)"><a >{{CurrentPage-2}}</a></li>
+						<li *ngIf="CurrentPage-1 >= 1" (click)="exactPage(CurrentPage-1)"><a >{{CurrentPage-1}}</a></li>
+						<li class="active"><a >{{CurrentPage}}</a></li>
+						<li *ngIf="CurrentPage+1 <= LastPage" (click)="exactPage(CurrentPage+1)"><a >{{CurrentPage+1}}</a></li>
+						<li *ngIf="CurrentPage+2 <= LastPage" (click)="exactPage(CurrentPage+2)"><a >{{CurrentPage+2}}</a></li>
+						<li *ngIf="CurrentPage+3 <= LastPage && CurrentPage-2 < 1" (click)="exactPage(CurrentPage+3)"><a >{{CurrentPage+3}}</a></li>
+						<li *ngIf="CurrentPage+4 <= LastPage && CurrentPage-1 < 1" (click)="exactPage(CurrentPage+4)"><a >{{CurrentPage+4}}</a></li>
+
+						<li class="Next"><a (click)="nextPage()"><span class="sps-chevron-right"></span><!--next page--></a></li>
+						<li class="Last"><a (click)="lastPage()"><span class="sps-chevron-right"></span><span class="sps-chevron-right"></span><!--last page--></a></li>
+					</ul>
+				</div>
+			</div> 			
+		</div>
+	</div>
+	<div *ngIf="WCS.GalleryListType === 'ListInventoryLots'" id='GalleryDivID'>
+		<div class='row'>						
+			<div id='ItemGallery'>
+				<!--Item Loop starts Here-->
+				<div class="col-xs-12 TopPageNav">
+					<div class="PerPage" id='perPageLHS'>
+						<!--<select (change)="onChange($event.target.value)" style="max-width:150px" id="ItemsPerPageID">
+							<option value='{{pageNum}}'  *ngFor="#pageNum of paging">Show {{pageNum}} Items</option>
+						</select> of <span id='ProductCount' style='color:#555'></span> -->	
+						Show <span class='hand clicked' id='span36' (click)="onChange(36)">36</span> <span id='span60' class='hand' (click)="onChange(60)">60</span> <span id='span120' class='hand' (click)="onChange(120)">120</span> of <span id='ProductCount' class='matchCount'></span> <span class=''>Matches</span>
+					</div>
+					<ul class='SPSPagination' id='pagingTop'>
+						<li class='Prev'><a  (click)="prevPage()"><span class="sps-chevron-left"></span></a></li>
+						<li class='disabled'><a><span class='CurrentPage' id='CurrentPage'>1</span> of <span id='LastPage' style='color:#555'>32</span></a></li>
+						<li class='Next'><a (click)="nextPage()"><span class="sps-chevron-right"></span></a></li>
+					</ul>	
+				</div>
+			<div align="center" id='NoneFoundID'>
+				<div Class='NoneFound'>
+					<div class="alert"><span class='icon-shocked'></span>&nbsp;<span>Sorry, no products matched.</span></div>
+					<div class='text'>Check your spelling or Try again using different search options</div>
+				</div>
+			</div>
+			<div id='ImagesSection'>
+				<div *ngFor="#Item of ItemGallery; #i=index" id='DivID_{{i}}'>
+					<div class='col-xs-12 col-sm-6 col-md-3'>
+						<div class='ImgWrap'>
+							<div>
+								<div id='EmailSingleImage_{{i}}' (click)="EmailSingleImage(Item, i, WCS.FileServer, WCS.VirtualDirectoryName, WCS.IDOneLable, WCS.IDTwoLable, WCS.IDThreeLable, WCS.SerialPrefixLable)" hidden></div>
+								<div id='popup_{{i}}' hidden>
+									<ul class='LBInfo'>
+										<li>{{Item.ItemName | uppercase}}</li>
+										<li *ngIf="Item.IDOne !== Null && Item.IDOne !== ''"><span>{{WCS.IDOneLable}}: </span>{{Item.IDOne | uppercase}}</li>
+										<li *ngIf="Item.IDTwo !== Null && Item.IDTwo !== ''"><span>{{WCS.IDTwoLable}}: </span>{{Item.IDTwo | uppercase}}</li>
+										<li *ngIf="Item.IDThree !== Null && Item.IDThree !== ''"><span>{{WCS.IDThreeLable}}: </span>{{Item.IDThree | uppercase}}</li>
+										<li *ngIf="Item.SerialPrefix !== Null && Item.SerialPrefix !== ''"><span>{{WCS.SerialPrefixLable}}: </span>{{Item.SerialPrefix}}</li>
+										<li *ngIf="Item.AverageLength !== 0 && Item.AverageWidth !== 0 && WCS.ShowAvgSizeinGallery === 'on'"><span>Avg Size: </span>{{Item.AverageLength}}" X {{Item.AverageWidth}}"</li>
+										<li *ngIf="WCS.ShowQuantityinGallery === 'on'"><span>Qty: </span><span *ngIf="Item.AvailableQty !== 0" style="font-weight: normal">{{Item.AvailableQty}} {{Item.UOM | uppercase}} / </span>{{Item.AvailableSlabs}} {{Item.ProductFormValue | uppercase}}s</li>
+									</ul>
+								</div>
+								<a *ngIf="Item.Filename !=''" href="{{WCS.SecureFilePath}}{{Item.Filename}}" class='Gallery' title='View Large' attr.data-sub-html="<div class='CenterCaption'><div id='iteminfo_{{i}}'></div><div class='LBForm'><div><input placeholder='Recipient-1' type='email' id ='email1_{{i}}'></div><div><input id ='email2_{{i}}' placeholder='Recipient-2' onfocus='ValidateFirstEmail({{i}})' type='email'></div><div><button onclick=EmailSingleImage()>Send Email</button></div></div></div></div><div id='SendingMail1' class='CenterCaption'></div><script>document.getElementById('iteminfo_{{i}}').innerHTML = document.getElementById('popup_{{i}}').innerHTML; 												
+								function ValidateFirstEmail(p){
+									if(document.getElementById('email1_'+ p).value){
+									var x = document.getElementById('email1_'+ p).value;
+									var atpos = x.indexOf('@');
+									var dotpos = x.lastIndexOf('.');
+										if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+											alert('Not a valid e-mail address');
+											document.getElementById('email1_'+ p).focus();
+										}
+									}
+									else{
+											alert('Enter Recipient-1 Email ID');
+											document.getElementById('email1_'+ p).focus();
+									}
+								}
+								function EmailSingleImage(){
+									document.getElementById('EmailSingleImage_{{i}}').click(); 
+								}
+								</script>" >
+								<div class='IconBG IconLayer' *ngIf="Item.Filename !=''">
+									<div class='icon-email' (click)="showGallery()"></div>
+								</div>
+								<div>
+									<img *ngIf="Item.Filename !=''" class='lazy' attr.data-original='{{WCS.SecureFilePath}}{{Item.Filename}}?width=500' alt='{{Item.ItemName}}' (click)="showGallery()"/>						
+								</div>
+								</a>
+								<!--<div class='IconBG' (click)="gotoDetail(Item)">
+									<div class='WebIconSprite DetailsIcon'></div>
+								</div>-->
+							</div>
+							<div>
+								<div *ngIf="Item.Filename == ''"  class="NoImg"><div class="NoImgText"></div></div>
+							</div>
+						</div>
+						<div class='InvItem ItemLabel'>
+							<p class='ItemInfo'>{{Item.ItemName | uppercase}}</p>
+							<p class='ItemInfo' *ngIf="Item.IDOne !== Null && Item.IDOne !== ''"><span>{{WCS.IDOneLable}}:</span>{{Item.IDOne | uppercase}}</p>
+							<p class='ItemInfo' *ngIf="Item.IDTwo !== Null && Item.IDTwo !== ''"><span>{{WCS.IDTwoLable}}:</span>{{Item.IDTwo | uppercase}}</p>
+							<p class='ItemInfo' *ngIf="Item.IDThree !== Null && Item.IDThree !== ''"><span>{{WCS.IDThreeLable}}:</span>{{Item.IDThree | uppercase}}</p>
+							<p class='ItemInfo' *ngIf="Item.SerialPrefix !== Null && Item.SerialPrefix !== ''"><span>{{WCS.SerialPrefixLable}}:</span>{{Item.SerialPrefix}}</p>
+							<!--<p class='ItemInfo'><span>Serial:</span></p>-->
+							<p class='ItemInfo' *ngIf="Item.AverageLength !== 0 && Item.AverageWidth !== 0 && WCS.ShowAvgSizeinGallery === 'on'"><span>Avg Size:</span>{{Item.AverageLength}}" X {{Item.AverageWidth}}"</p>
+							<p class='ItemInfo' *ngIf="WCS.ShowQuantityinGallery === 'on'"><span>Qty:</span><span *ngIf="Item.AvailableQty !== 0" style="font-weight: normal">{{Item.AvailableQty}} {{Item.UOM | uppercase}} / </span>{{Item.AvailableSlabs}} {{Item.ProductFormValue | uppercase}}s</p><!--For non slab Alternate Unit of measure should been shown if availible-->
+							<button (click)="RemoveFromCollection(Item)" *ngIf="Item.WebCartID*1 != 0" class="Remove"><span class='icon-plusthin'></span>&nbsp;Collection</button>
+							<button (click)="AddToCollection(Item)" *ngIf="Item.WebCartID*1 === 0" ><span class='icon-plusthin'></span>&nbsp;Collection</button>
+							<!--<button (click)="EmailSingleImage()"> </button>-->
+						</div>					
+					</div>
+					<div *ngIf="i%4 === 3" class='clearfix visible-lg-block'></div>
+					<div *ngIf="i%3 === 2" class='clearfix visible-md-block'></div>
+					<div *ngIf="i%2 === 1" class='clearfix visible-sm-block'></div>
+				</div>
+			</div>
+				<!--End Item-->		
+			</div>
+			{{lightGallery()}}
+		</div>
+		<div class="row">
+			<div class="col-xs-12 BottomPageNav">
+				<ul class="SPSPagination" id='pagingBottom'>
+					<li class="First"><a (click)="firstPage()"><span class="sps-chevron-left"></span><span class="sps-chevron-left"></span><!--first page--></a></li>
+					<li class="Prev"><a (click)="prevPage()"><span class="sps-chevron-left"></span><!--Prev page--></a></li>
+					<li *ngIf="CurrentPage-2 >= 1" (click)="exactPage(CurrentPage-2)"><a style="">{{CurrentPage-2}}</a></li>
+					<li *ngIf="CurrentPage-1 >= 1" (click)="exactPage(CurrentPage-1)"><a >{{CurrentPage-1}}</a></li>
+					<li class="active"><a >{{CurrentPage}}</a></li>
+					<li *ngIf="CurrentPage+1 <= LastPage" (click)="exactPage(CurrentPage+1)"><a >{{CurrentPage+1}}</a></li>
+					<li *ngIf="CurrentPage+2 <= LastPage" (click)="exactPage(CurrentPage+2)"><a >{{CurrentPage+2}}</a></li>
+					<li *ngIf="CurrentPage+3 <= LastPage && CurrentPage-2 < 1" (click)="exactPage(CurrentPage+3)"><a >{{CurrentPage+3}}</a></li>
+					<li *ngIf="CurrentPage+4 <= LastPage && CurrentPage-1 < 1" (click)="exactPage(CurrentPage+4)"><a >{{CurrentPage+4}}</a></li>
+
+					<li class="Next"><a (click)="nextPage()"><span class="sps-chevron-right"></span><!--Next page--></a></li>
+					<li class="Last"><a (click)="lastPage()"><span class="sps-chevron-right"></span><span class="sps-chevron-right"></span><!--last page--></a></li>
+				</ul>
+			</div>
+		</div> 
+	</div>	
+</div>
+</div>
+
+
+    
+
