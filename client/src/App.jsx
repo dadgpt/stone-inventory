@@ -16,6 +16,8 @@ import {
 } from './services/api.js';
 import './App.css';
 
+// Testing Vercel deployment trigger
+
 const DEFAULT_FILTERS = {
   search: '',
   location: '',
