@@ -189,8 +189,8 @@ export default function App() {
     <div className="app">
       <header className="app__header">
         <div>
-          <h1>Stone Inventory Prototype</h1>
-          <p>React + Node sandbox demonstrating catalog search, detail, and admin flows.</p>
+          <h1>Foundation Inventory Management System</h1>
+          <p>You're viewing a prototype of a modern feature-forward inventory system that gets the basics right so that you and your team can spend more time working on your business, not fighting with software.</p>
         </div>
         <button type="button" className="secondary" onClick={handleRefresh} disabled={loading}>
           Refresh Data
